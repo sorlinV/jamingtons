@@ -39,7 +39,7 @@ public class player : MonoBehaviour {
 		if (dir.x != 0 || dir.y != 0 || dir.z != 0) {
 			transform.gameObject.GetComponent<Rigidbody>().velocity = dir * speed;
 		}
-		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * speed, 0));
+		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * speed * 10, 0));
 	}
 
     void Update()
