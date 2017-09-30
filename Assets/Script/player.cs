@@ -15,16 +15,18 @@ public class player : MonoBehaviour {
 		callback();
 	}
 
-	void shoot (float delay, int nb_bullet, float spray) {
+	void shoot (float delay, float spray, float range, int nb_bullet) {
 		if (Time.time > delayed_shoot) {
 			delayed_shoot = Time.time + delay;
 			for (int i = 0; i < nb_bullet; i++)
 			{
-				Quaternion dir = new Quaternion(transform.GetChild(0).rotation.x,
-					transform.GetChild(0).rotation.y + Random.Range(-spray, spray),
-					transform.GetChild(0).rotation.z, 0);
-				GameObject clone = Instantiate(bullet, transform.GetChild(0).position, dir) as GameObject;
-				clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * (speed * 2);
+				RaycastHit hit;
+				Vector3 dir = Quaternion.Euler(0, Random.Range(-spray, spray), 0) * transform.GetChild(0).forward ;
+		        Ray ray = new Ray(transform.position, dir);
+				if (Physics.Raycast(ray, out hit, range))
+				{
+					Instantiate(bullet, hit.point, transform.rotation);
+				}
 			}
 		}
 	}
@@ -47,7 +49,7 @@ public class player : MonoBehaviour {
 		mouv();
 		if (Input.GetButton("Fire1"))
 		{
-			shoot(0.5f, 3, 25f);
+			shoot(0.5f, 15f, 30f, 5);
 		}
 	}
 }
