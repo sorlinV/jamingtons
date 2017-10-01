@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class player_look : MonoBehaviour {
+public class player_look_multi : NetworkBehaviour {
 	void look()
 	{
 		RaycastHit hit;
@@ -13,7 +14,8 @@ public class player_look : MonoBehaviour {
 		}
 	}
 
-	void CmdUpdate()
+    [Command]
+	void Update()
 	{
 		look();
 	}

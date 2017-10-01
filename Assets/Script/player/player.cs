@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using UnityEngine.UI;
 public delegate void Funct();
 
 class Weapon
@@ -35,10 +35,14 @@ class Weapon
         this.bullet_per_shot = bullet_per_shot;
     }
 
-    public void reload(AudioSource audio, AudioClip reload)
+    public void ui(Text ui)
+    {
+        ui.text = name + ": " + nb_max_bullet + "/" + nb_max_bullet;
+    }
+
+    public void reload()
     {
         if (Time.time > delayed) {
-            audio.PlayOneShot(reload);
             delayed = Time.time + this.reloadDelay;
             nb_bullet = nb_max_bullet;
         }
@@ -48,11 +52,9 @@ class Weapon
         return (Mathf.Sqrt(Mathf.Pow(b.x - a.x, 2) + Mathf.Pow(b.y - a.y, 2) + Mathf.Pow(b.z - a.z, 2)));
     }
 
-    public void shoot(Transform transform, Transform spawn_point, GameObject impact, GameObject bullet,
-    AudioSource audio, AudioClip shoot, AudioClip reload)
+    public void shoot(Transform transform, Transform spawn_point, GameObject impact, GameObject bullet)
     {
         if (Time.time > delayed) {
-            audio.PlayOneShot(shoot);
             for (int i = 0; i < this.bullet_per_shot; i++)
             {
                 RaycastHit hit;
@@ -74,7 +76,7 @@ class Weapon
             nb_bullet--;
             if (nb_bullet <= 0)
             {
-                this.reload(audio, reload);
+                this.reload();
             } else {
                 delayed = Time.time + this.delay;
             }
@@ -83,20 +85,16 @@ class Weapon
 
 }
 
-public class player : NetworkBehaviour {
+public class player : MonoBehaviour {
     public Transform bullet_spawn;
 	public GameObject impact;
 	public GameObject bullet;
+    public Text weapon_ui;
 	public float speed = 10;
 	public bool is_falling = true;
     public float hp = 100;
-    public AudioClip pistol_shoot;
-    public AudioClip pistol_reload;
-    public AudioClip shootgun_shoot;
-    public AudioClip shootgun_reload;
-    public AudioClip ak_shoot;
-    public AudioClip ak_reload;
     private float hpMax;
+
     void Start()
     {
         hpMax = hp;
@@ -111,8 +109,20 @@ public class player : NetworkBehaviour {
 		callback();
 	}
 
-    public void lost_hp (float dmg) {
+    public void died()
+    {
 
+    }
+
+    public void hpAction (float dmg) {
+        hp += dmg;
+        if (hp <= 0)
+        {
+            died();
+            hp = 0;
+        } else if(hp > hpMax) {
+            hp = hpMax;
+        }
     }
 
 	void mouv()
@@ -130,18 +140,15 @@ public class player : NetworkBehaviour {
 
     void Update()
     {
-        if (!isLocalPlayer) {
-            return;
-        }
         mouv();
         if (Input.GetButton("Fire1"))
         {
-            ak.shoot(transform, bullet_spawn, impact, bullet, GetComponent<AudioSource>(), ak_shoot, ak_reload);
+            ak.shoot(transform, bullet_spawn, impact, bullet);
         }
         if (Input.GetKey(KeyCode.R))
         {
-            ak.reload(GetComponent<AudioSource>(), ak_reload);
+            ak.reload();
         }
-
+        ak.ui(weapon_ui);
 	}
 }
