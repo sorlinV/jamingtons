@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 65547100520350684}
   m_Layer: 0
   m_Name: zombi_bras.L
-  m_TagString: Untagged
+  m_TagString: member
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

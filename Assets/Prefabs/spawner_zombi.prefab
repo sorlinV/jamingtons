@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b8fff4b32b34347a280902b1fbc369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 10
+  delay: 20
   entity:
   - {fileID: 1801101022533036, guid: 319d71954709a42d690b5e42a0e8bede, type: 2}
   - {fileID: 1924165900826024, guid: 32939a3ad262c4480abec31bf802ec56, type: 2}

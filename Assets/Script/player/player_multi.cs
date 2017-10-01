@@ -142,7 +142,7 @@ public class player_multi : NetworkBehaviour {
         mouv();
         if (Input.GetButton("Fire1"))
         {
-            ak.shoot(transform, bullet_spawn, impact, bullet);
+            ak.shoot(transform, bullet_spawn, impact, impact, bullet);
         }
         if (Input.GetKey(KeyCode.R))
         {
