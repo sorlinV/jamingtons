@@ -61,13 +61,13 @@ class Weapon
                 float rand = Random.Range(-this.spray, this.spray);
                 Vector3 dir = Quaternion.Euler(0, rand, 0) *
                     spawn_point.forward;
-                Ray ray = new Ray(transform.position, dir);
+                Ray ray = new Ray(spawn_point.position, dir);
                 GameObject clone = GameObject.Instantiate(bullet, spawn_point.position,
                     Quaternion.Euler(spawn_point.eulerAngles.x, spawn_point.eulerAngles.y + rand, spawn_point.eulerAngles.z)) as GameObject;
                 GameObject.Destroy(clone, 2f);
                 if (Physics.Raycast(ray, out hit, this.range))
                 {
-                    if (get_range(hit.point, transform.position) < this.range) {
+                    if (get_range(hit.point, spawn_point.position) < this.range) {
                         //went something is touch by bullet
                         clone = GameObject.Instantiate(impact, hit.point, transform.rotation) as GameObject;
                         GameObject.Destroy(clone, 1f);
@@ -101,9 +101,9 @@ public class player : MonoBehaviour {
         hpMax = hp;
     }
 
-	 Weapon ak = new Weapon("shootgun", 0.7f, 3f, 10f, 20f, 20f, 6, 10);
+	 //Weapon shootgun = new Weapon("shootgun", 0.7f, 3f, 10f, 20f, 20f, 6, 10);
 	//Weapon pistol = new Weapon("pistol", 0.4f, 1.60f, 2.5f, 35f, 35f, 12, 1);
-	//Weapon ak = new Weapon("ak", 0.1f, 1.60f, 5f, 45f, 15f, 30, 1);
+	Weapon ak = new Weapon("ak", 0.02f, 1.60f, 5f, 45f, 15f, 300, 1);
 
 	IEnumerator setTimeout(Funct callback, float time) {
         yield return new WaitForSeconds(time);

@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4374838186105190}
   - component: {fileID: 198461502023695534}
   - component: {fileID: 199999726688961756}
+  - component: {fileID: 114820901129367678}
   m_Layer: 0
   m_Name: bullet_particle
   m_TagString: Untagged
@@ -41,6 +42,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114820901129367678
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1262895242581320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 493292aba80944bb9ba65a6c756d82eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198461502023695534
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -2408,9 +2420,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 3
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
