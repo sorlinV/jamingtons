@@ -165,8 +165,6 @@ public class player : MonoBehaviour {
 		{
 			dir = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal") - transform.up;
 		}
-
-
         if (dir.x != 0 || dir.z != 0)
         {
             GetComponentInChildren<Animation>().Play("Armature_player|Player_walk");
@@ -193,11 +191,11 @@ public class player : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.F1)) {
             current_weapon = pistol;
-        } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        } else if (Input.GetKeyDown(KeyCode.F2)) {
             current_weapon = shootgun;
-        } else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        } else if (Input.GetKeyDown(KeyCode.F3)) {
             current_weapon = ak;
         }
         mouv();
@@ -210,5 +208,13 @@ public class player : MonoBehaviour {
             current_weapon.reload();
         }
         ui();
+	}
+ 
+	void OnCollisionEnter(Collision other)
+	{
+		if (other.gameObject.tag == "member") {
+			hpAction(10);
+			Destroy(other.gameObject);
+		}
 	}
 }

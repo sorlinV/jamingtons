@@ -34,6 +34,29 @@ public class enemy : MonoBehaviour {
         } else if(hp > hpMax) {
             hp = hpMax;
         }
+
+		int i = 0;
+		foreach (GameObject corpPart in corpParts)
+		{
+			if (corpPart.activeSelf) {
+				i++;
+			}
+		}
+		if (Random.Range(0, 20) < 1) {
+			int rand = (int)Random.Range(0, i);
+			i = -1;
+			foreach (GameObject corpPart in corpParts)
+			{
+				if (corpPart.activeSelf) {
+					i++;
+					if (i == rand)
+					{
+						Instantiate(Resources.Load(corpPart.name), transform.position, transform.rotation);
+						corpPart.SetActive(false);
+					}
+				}
+			}
+		}
     }
 
     float get_range(Vector3 a, Vector3 b){
