@@ -65,7 +65,7 @@ class Weapon
         return (Mathf.Sqrt(Mathf.Pow(b.x - a.x, 2) + Mathf.Pow(b.y - a.y, 2) + Mathf.Pow(b.z - a.z, 2)));
     }
 
-    public void shoot(Transform transform, Transform spawn_point, GameObject impact, GameObject bullet)
+    public void shoot(Transform transform, Transform spawn_point, GameObject impact_enemy, GameObject impact_mur, GameObject bullet)
     {
         if (Time.time > delayed) {
             audio.PlayOneShot(shoot_sound);
@@ -87,7 +87,11 @@ class Weapon
                         {
                             hit.collider.gameObject.GetComponent<enemy>().hpAction(-this.dmg);
                         }
-                        clone = GameObject.Instantiate(impact, hit.point, transform.rotation) as GameObject;
+                        if (hit.collider.gameObject.tag == "Enemy") {
+                            clone = GameObject.Instantiate(impact_enemy, hit.point, transform.rotation) as GameObject;
+                        } else {
+                            clone = GameObject.Instantiate(impact_mur, hit.point, transform.rotation) as GameObject;
+                        }
                         GameObject.Destroy(clone, 1f);
                     }
                 }
@@ -107,7 +111,8 @@ class Weapon
 [RequireComponent(typeof(AudioSource))]
 public class player : MonoBehaviour {
     public Transform bullet_spawn;
-	public GameObject impact;
+	public GameObject impact_enemy;
+	public GameObject impact_mur;
 	public GameObject bullet;
     public Text weapon_ui;
     public Text hp_ui;
@@ -137,12 +142,14 @@ public class player : MonoBehaviour {
 	private Weapon shootgun = new Weapon("shootgun", 0.7f, 3.8f, 10f, 20f, 20f, 6, 10);
 	private Weapon pistol = new Weapon("pistol", 0.4f, 1.60f, 2.5f, 35f, 35f, 12, 1);
 	private Weapon ak = new Weapon("ak", 0.1f, 1.60f, 5f, 45f, 15f, 30, 1);
+	private Weapon calach = new Weapon("calach", 0.02f, 10f, 0f, 45f, 35f, 1000, 1);
     void Start()
     {
         hpMax = hp;
         ak.setAudios(GetComponent<AudioSource>(), reload_ak, shoot_ak);
         pistol.setAudios(GetComponent<AudioSource>(), reload_pistol, shoot_pistol);
         shootgun.setAudios(GetComponent<AudioSource>(), reload_shootgun, shoot_shootgun);
+        calach.setAudios(GetComponent<AudioSource>(), reload_ak, shoot_ak);
         current_weapon = pistol;
     }
 
@@ -197,11 +204,13 @@ public class player : MonoBehaviour {
             current_weapon = shootgun;
         } else if (Input.GetKeyDown(KeyCode.F3)) {
             current_weapon = ak;
+        } else if (Input.GetKey(KeyCode.F1) && Input.GetKeyDown(KeyCode.F12)) {
+            current_weapon = calach;
         }
         mouv();
         if (Input.GetButton("Fire1"))
         {
-            current_weapon.shoot(transform, bullet_spawn, impact, bullet);
+            current_weapon.shoot(transform, bullet_spawn, impact_enemy, impact_mur, bullet);
         }
         if (Input.GetKey(KeyCode.R))
         {
