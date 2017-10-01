@@ -14,7 +14,6 @@ public class player_look_multi : NetworkBehaviour {
 		}
 	}
 
-    [Command]
 	void Update()
 	{
 		look();

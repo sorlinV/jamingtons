@@ -94,7 +94,6 @@ public class player_multi : NetworkBehaviour {
 	public bool is_falling = true;
     public float hp = 100;
     private float hpMax;
-    [Command]
     void Start()
     {
         hpMax = hp;
@@ -138,7 +137,6 @@ public class player_multi : NetworkBehaviour {
 		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * speed * 10, 0));
 	}
 
-    [Command]
     void Update()
     {
         mouv();
