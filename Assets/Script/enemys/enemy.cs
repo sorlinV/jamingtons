@@ -5,6 +5,31 @@ using UnityEngine.AI;
 
 public class enemy : MonoBehaviour {
 	public bool is_falling = true;
+	public float delay_att = 2f;
+	private float delayed_att;
+    public float hp = 100;
+    private float hpMax;
+
+	void Start ()
+	{
+		hp = hpMax;
+	}
+
+	public void died ()
+	{
+		Destroy(gameObject);
+	}
+
+    public void hpAction (float dmg) {
+        hp += dmg;
+        if (hp <= 0)
+        {
+            died();
+            hp = 0;
+        } else if(hp > hpMax) {
+            hp = hpMax;
+        }
+    }
 
     float get_range(Vector3 a, Vector3 b){
         return (Mathf.Sqrt(Mathf.Pow(b.x - a.x, 2) + Mathf.Pow(b.y - a.y, 2) + Mathf.Pow(b.z - a.z, 2)));
@@ -21,10 +46,11 @@ public class enemy : MonoBehaviour {
 				close_range = get_range(player.transform.position, transform.position);
 			}
 		}
-		if (close_range < 2)
+		if (close_range < 2 && delayed_att < Time.time)
 		{
-
-		} else {
+			delayed_att = Time.time + delay_att;
+			close.GetComponent<player>().hpAction(-10);
+		} else if (close_range >= 2) {
 			GetComponent<NavMeshAgent>().destination = close.transform.position;
 		}
 	}

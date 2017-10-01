@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public delegate void Funct();
 
 class Weapon
@@ -14,7 +15,7 @@ class Weapon
     private int nb_bullet;
     private int nb_max_bullet;
     private int bullet_per_shot;
-    private int dmg;
+    private float dmg;
     private float delayed = 0;
     public Weapon(string name,
         float delay,
@@ -31,6 +32,7 @@ class Weapon
         this.spray = spray;
         this.range = range;
         this.nb_bullet = nb_bullet;
+        this.dmg = dmg;
         this.nb_max_bullet = nb_bullet;
         this.bullet_per_shot = bullet_per_shot;
     }
@@ -69,6 +71,10 @@ class Weapon
                 {
                     if (get_range(hit.point, spawn_point.position) < this.range) {
                         //went something is touch by bullet
+                        if (hit.collider.gameObject.GetComponent<enemy>())
+                        {
+                            hit.collider.gameObject.GetComponent<enemy>().hpAction(-this.dmg);
+                        }
                         clone = GameObject.Instantiate(impact, hit.point, transform.rotation) as GameObject;
                         GameObject.Destroy(clone, 1f);
                     }
@@ -91,29 +97,11 @@ public class player : MonoBehaviour {
 	public GameObject impact;
 	public GameObject bullet;
     public Text weapon_ui;
+    public Text hp_ui;
 	public float speed = 10;
 	public bool is_falling = true;
     public float hp = 100;
     private float hpMax;
-
-    void Start()
-    {
-        hpMax = hp;
-    }
-
-	 //Weapon shootgun = new Weapon("shootgun", 0.7f, 3f, 10f, 20f, 20f, 6, 10);
-	//Weapon pistol = new Weapon("pistol", 0.4f, 1.60f, 2.5f, 35f, 35f, 12, 1);
-	Weapon ak = new Weapon("ak", 0.02f, 1.60f, 5f, 45f, 15f, 300, 1);
-
-	IEnumerator setTimeout(Funct callback, float time) {
-        yield return new WaitForSeconds(time);
-		callback();
-	}
-
-    public void died()
-    {
-
-    }
 
     public void hpAction (float dmg) {
         hp += dmg;
@@ -125,6 +113,26 @@ public class player : MonoBehaviour {
             hp = hpMax;
         }
     }
+
+    void Start()
+    {
+        hpMax = hp;
+    }
+
+	 //Weapon shootgun = new Weapon("shootgun", 0.7f, 3f, 10f, 20f, 20f, 6, 10);
+	//Weapon pistol = new Weapon("pistol", 0.4f, 1.60f, 2.5f, 35f, 35f, 12, 1);
+	Weapon ak = new Weapon("ak", 0.1f, 1.60f, 5f, 45f, 15f, 30, 1);
+
+	IEnumerator setTimeout(Funct callback, float time) {
+        yield return new WaitForSeconds(time);
+		callback();
+	}
+
+    public void died()
+    {
+		SceneManager.LoadScene("menu");
+    }
+
 
 	void mouv()
 	{
@@ -139,6 +147,16 @@ public class player : MonoBehaviour {
 		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * speed * 10, 0));
 	}
 
+    void ui ()
+    {
+        hp_ui.text = "";
+        int hp_view = (int)(hp/hpMax * 10);
+        for (int i = 0; i < hp_view; i++) {
+            hp_ui.text += "♥";
+        }
+        weapon_ui.text = ak.ui();
+    }
+
     void Update()
     {
         mouv();
@@ -150,6 +168,6 @@ public class player : MonoBehaviour {
         {
             ak.reload();
         }
-        weapon_ui.text = ak.ui();
+        ui();
 	}
 }
