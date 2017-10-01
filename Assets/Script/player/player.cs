@@ -165,8 +165,18 @@ public class player : MonoBehaviour {
 		{
 			dir = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal") - transform.up;
 		}
-		if (dir.x != 0 || dir.y != 0 || dir.z != 0) {
-			transform.gameObject.GetComponent<Rigidbody>().velocity = dir.normalized * speed;
+
+
+        if (dir.x != 0 || dir.z != 0)
+        {
+            GetComponentInChildren<Animation>().Play("Armature_player|Player_walk");
+        }
+        else
+        {
+            GetComponentInChildren<Animation>().Play("Armature_player|Player_idle");
+        }
+        if (dir.x != 0 || dir.y != 0 || dir.z != 0) {
+            transform.gameObject.GetComponent<Rigidbody>().velocity = dir.normalized * speed;
 		}
 		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * speed * 10, 0));
 	}

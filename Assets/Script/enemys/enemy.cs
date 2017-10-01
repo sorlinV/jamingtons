@@ -55,8 +55,10 @@ public class enemy : MonoBehaviour {
 		{
 			delayed_att = Time.time + delay_att;
 			close.GetComponent<player>().hpAction(-10);
-		} else if (close_range >= 2) {
+            GetComponentInChildren<Animation>().Play("Armature_zombi|zombi_attack");
+        } else if (close_range >= 2) {
 			GetComponent<NavMeshAgent>().destination = close.transform.position;
-		}
+            GetComponentInChildren<Animation>().Play("Armature_zombi|zombi_walk");
+        }
 	}
 }
