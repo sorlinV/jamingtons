@@ -132,9 +132,9 @@ public class player : MonoBehaviour {
         hpMax = hp;
     }
 
-	 //Weapon shootgun = new Weapon("shootgun", 0.7f, 3f, 10f, 20f, 20f, 6, 10);
+	Weapon ak = new Weapon("shootgun", 0.7f, 3f, 10f, 20f, 20f, 6, 10);
 	//Weapon pistol = new Weapon("pistol", 0.4f, 1.60f, 2.5f, 35f, 35f, 12, 1);
-	Weapon ak = new Weapon("ak", 0.1f, 1.60f, 5f, 45f, 15f, 30, 1);
+	//Weapon ak = new Weapon("ak", 0.1f, 1.60f, 5f, 45f, 15f, 30, 1);
 
 	IEnumerator setTimeout(Funct callback, float time) {
         yield return new WaitForSeconds(time);
