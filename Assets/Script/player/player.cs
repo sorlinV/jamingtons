@@ -83,7 +83,7 @@ class Weapon
 
 }
 
-public class player : MonoBehaviour {
+public class player : NetworkBehaviour {
     public Transform bullet_spawn;
 	public GameObject impact;
 	public GameObject bullet;
@@ -130,6 +130,9 @@ public class player : MonoBehaviour {
 
     void Update()
     {
+        if (!isLocalPlayer) {
+            return;
+        }
         mouv();
         if (Input.GetButton("Fire1"))
         {
