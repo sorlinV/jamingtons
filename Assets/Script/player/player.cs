@@ -115,7 +115,7 @@ public class player : MonoBehaviour {
 	public bool is_falling = true;
     public float hp = 100;
     private float hpMax;
-
+    private Weapon current_weapon;
     public void hpAction (float dmg) {
         hp += dmg;
         if (hp <= 0)
@@ -127,14 +127,25 @@ public class player : MonoBehaviour {
         }
     }
 
+
+    public AudioClip reload_ak;
+    public AudioClip shoot_ak;
+    public AudioClip reload_pistol;
+    public AudioClip shoot_pistol;
+    public AudioClip reload_shootgun;
+    public AudioClip shoot_shootgun;
+	private Weapon shootgun = new Weapon("shootgun", 0.7f, 3.8f, 10f, 20f, 20f, 6, 10);
+	private Weapon pistol = new Weapon("pistol", 0.4f, 1.60f, 2.5f, 35f, 35f, 12, 1);
+	private Weapon ak = new Weapon("ak", 0.1f, 1.60f, 5f, 45f, 15f, 30, 1);
     void Start()
     {
         hpMax = hp;
+        ak.setAudios(GetComponent<AudioSource>(), reload_ak, shoot_ak);
+        pistol.setAudios(GetComponent<AudioSource>(), reload_pistol, shoot_pistol);
+        shootgun.setAudios(GetComponent<AudioSource>(), reload_shootgun, shoot_shootgun);
+        current_weapon = pistol;
     }
 
-	Weapon ak = new Weapon("shootgun", 0.7f, 3f, 10f, 20f, 20f, 6, 10);
-	//Weapon pistol = new Weapon("pistol", 0.4f, 1.60f, 2.5f, 35f, 35f, 12, 1);
-	//Weapon ak = new Weapon("ak", 0.1f, 1.60f, 5f, 45f, 15f, 30, 1);
 
 	IEnumerator setTimeout(Funct callback, float time) {
         yield return new WaitForSeconds(time);
@@ -167,28 +178,26 @@ public class player : MonoBehaviour {
         for (int i = 0; i < hp_view; i++) {
             hp_ui.text += "♥";
         }
-        weapon_ui.text = ak.ui();
-    }
-
-    public AudioClip reload_weap;
-    public AudioClip shoot_weap;
-
-    void sound()
-    {
-        ak.setAudios(GetComponent<AudioSource>(), reload_weap, shoot_weap);
+        weapon_ui.text = current_weapon.ui();
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            current_weapon = pistol;
+        } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            current_weapon = shootgun;
+        } else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            current_weapon = ak;
+        }
         mouv();
-        sound();
         if (Input.GetButton("Fire1"))
         {
-            ak.shoot(transform, bullet_spawn, impact, bullet);
+            current_weapon.shoot(transform, bullet_spawn, impact, bullet);
         }
         if (Input.GetKey(KeyCode.R))
         {
-            ak.reload();
+            current_weapon.reload();
         }
         ui();
 	}
