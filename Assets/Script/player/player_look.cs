@@ -13,7 +13,7 @@ public class player_look : MonoBehaviour {
 		}
 	}
 
-	void CmdUpdate()
+	void Update()
 	{
 		look();
 	}

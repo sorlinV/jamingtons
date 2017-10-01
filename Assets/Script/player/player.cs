@@ -35,9 +35,9 @@ class Weapon
         this.bullet_per_shot = bullet_per_shot;
     }
 
-    public void ui(Text ui)
+    public string ui()
     {
-        ui.text = name + ": " + nb_max_bullet + "/" + nb_max_bullet;
+        return this.name + ": " + this.nb_bullet + "/" + this.nb_max_bullet;
     }
 
     public void reload()
@@ -58,11 +58,12 @@ class Weapon
             for (int i = 0; i < this.bullet_per_shot; i++)
             {
                 RaycastHit hit;
-                Vector3 dir = Quaternion.Euler(0, Random.Range(-this.spray, this.spray), 0) *
+                float rand = Random.Range(-this.spray, this.spray);
+                Vector3 dir = Quaternion.Euler(0, rand, 0) *
                     spawn_point.forward;
                 Ray ray = new Ray(transform.position, dir);
                 GameObject clone = GameObject.Instantiate(bullet, spawn_point.position,
-                    spawn_point.rotation) as GameObject;
+                    Quaternion.Euler(spawn_point.eulerAngles.x, spawn_point.eulerAngles.y + rand, spawn_point.eulerAngles.z)) as GameObject;
                 GameObject.Destroy(clone, 2f);
                 if (Physics.Raycast(ray, out hit, this.range))
                 {
@@ -100,9 +101,9 @@ public class player : MonoBehaviour {
         hpMax = hp;
     }
 
-	// Weapon shootgun = new Weapon("shootgun", 0.7f, 3f, 10f, 20f, 20f, 7, 10);
-	// Weapon pistol = new Weapon("pistol", 0.4f, 1.60f, 2.5f, 35f, 35f, 12, 1);
-	Weapon ak = new Weapon("ak", 0.1f, 1.60f, 5f, 45f, 15f, 30, 1);
+	 Weapon ak = new Weapon("shootgun", 0.7f, 3f, 10f, 20f, 20f, 6, 10);
+	//Weapon pistol = new Weapon("pistol", 0.4f, 1.60f, 2.5f, 35f, 35f, 12, 1);
+	//Weapon ak = new Weapon("ak", 0.1f, 1.60f, 5f, 45f, 15f, 30, 1);
 
 	IEnumerator setTimeout(Funct callback, float time) {
         yield return new WaitForSeconds(time);
@@ -133,7 +134,7 @@ public class player : MonoBehaviour {
 			dir = transform.forward * Input.GetAxis("Vertical") + transform.right * Input.GetAxis("Horizontal") - transform.up;
 		}
 		if (dir.x != 0 || dir.y != 0 || dir.z != 0) {
-			transform.gameObject.GetComponent<Rigidbody>().velocity = dir * speed;
+			transform.gameObject.GetComponent<Rigidbody>().velocity = dir.normalized * speed;
 		}
 		transform.Rotate(new Vector3(0, Input.GetAxis("Mouse ScrollWheel") * speed * 10, 0));
 	}
@@ -149,6 +150,6 @@ public class player : MonoBehaviour {
         {
             ak.reload();
         }
-        ak.ui(weapon_ui);
+        weapon_ui.text = ak.ui();
 	}
 }

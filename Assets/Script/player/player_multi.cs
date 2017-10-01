@@ -148,6 +148,6 @@ public class player_multi : NetworkBehaviour {
         {
             ak.reload();
         }
-        ak.ui(weapon_ui);
+        weapon_ui.text = ak.ui();
 	}
 }
