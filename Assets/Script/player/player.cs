@@ -16,7 +16,10 @@ class Weapon
     private int nb_max_bullet;
     private int bullet_per_shot;
     private float dmg;
-    private float delayed = 0;
+    private float delayed;
+    private AudioSource audio;
+    private AudioClip reload_sound;
+    private AudioClip shoot_sound;
     public Weapon(string name,
         float delay,
         float reloadDelay,
@@ -37,6 +40,13 @@ class Weapon
         this.bullet_per_shot = bullet_per_shot;
     }
 
+    public void setAudios(AudioSource audio, AudioClip reload_sound, AudioClip shoot_sound)
+    {
+        this.audio = audio;
+        this.reload_sound = reload_sound;
+        this.shoot_sound = shoot_sound;
+    }
+
     public string ui()
     {
         return this.name + ": " + this.nb_bullet + "/" + this.nb_max_bullet;
@@ -45,6 +55,7 @@ class Weapon
     public void reload()
     {
         if (Time.time > delayed) {
+            audio.PlayOneShot(reload_sound);
             delayed = Time.time + this.reloadDelay;
             nb_bullet = nb_max_bullet;
         }
@@ -57,6 +68,7 @@ class Weapon
     public void shoot(Transform transform, Transform spawn_point, GameObject impact, GameObject bullet)
     {
         if (Time.time > delayed) {
+            audio.PlayOneShot(shoot_sound);
             for (int i = 0; i < this.bullet_per_shot; i++)
             {
                 RaycastHit hit;
@@ -92,6 +104,7 @@ class Weapon
 
 }
 
+[RequireComponent(typeof(AudioSource))]
 public class player : MonoBehaviour {
     public Transform bullet_spawn;
 	public GameObject impact;
@@ -157,9 +170,18 @@ public class player : MonoBehaviour {
         weapon_ui.text = ak.ui();
     }
 
+    public AudioClip reload_weap;
+    public AudioClip shoot_weap;
+
+    void sound()
+    {
+        ak.setAudios(GetComponent<AudioSource>(), reload_weap, shoot_weap);
+    }
+
     void Update()
     {
         mouv();
+        sound();
         if (Input.GetButton("Fire1"))
         {
             ak.shoot(transform, bullet_spawn, impact, bullet);

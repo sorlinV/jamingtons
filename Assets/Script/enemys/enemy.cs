@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class enemy : MonoBehaviour {
+	public GameObject[] corpParts;
 	public bool is_falling = true;
 	public float delay_att = 2f;
 	private float delayed_att;
@@ -12,7 +13,11 @@ public class enemy : MonoBehaviour {
 
 	void Start ()
 	{
-		hp = hpMax;
+		hpMax = hp;
+		foreach (GameObject corpPart in corpParts)
+		{
+			corpPart.SetActive(Random.value < 0.5);
+		}
 	}
 
 	public void died ()
