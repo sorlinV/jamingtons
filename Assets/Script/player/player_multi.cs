@@ -108,16 +108,10 @@ public class player_multi : NetworkBehaviour {
 		callback();
 	}
 
-    public void died()
-    {
-
-    }
-
     public void hpAction (float dmg) {
         hp += dmg;
         if (hp <= 0)
         {
-            died();
             hp = 0;
         } else if(hp > hpMax) {
             hp = hpMax;
@@ -142,7 +136,7 @@ public class player_multi : NetworkBehaviour {
         mouv();
         if (Input.GetButton("Fire1"))
         {
-            ak.shoot(transform, bullet_spawn, impact, impact, bullet);
+            ak.shoot(transform, bullet_spawn, impact, impact, bullet, 0);
         }
         if (Input.GetKey(KeyCode.R))
         {

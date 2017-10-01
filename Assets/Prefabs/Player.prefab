@@ -196,6 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4667617229725864}
   - component: {fileID: 82028454676999332}
+  - component: {fileID: 81561024736370980}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1324,7 +1325,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1261580598231432}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.020025, y: -1.4999987, z: 1.7407306}
+  m_LocalPosition: {x: 0, y: -0.7, z: -26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4312758470653838}
@@ -1635,20 +1636,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!81 &81561024736370980
+AudioListener:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1261580598231432}
+  m_Enabled: 1
 --- !u!82 &82028454676999332
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1261580598231432}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 74fc8d4cf3a97454a8e9952cd475d2dc, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9c525b4f38966498c8edd0a91e8e1a61, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1726,7 +1734,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a675e0a106b044ef9a12eb056b890d1d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.25
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1875,15 +1883,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet_spawn: {fileID: 4141348388900062}
-  impact: {fileID: 1694818688278508, guid: e614f0ec7af284fab977562c1e1a1baf, type: 2}
+  impact_enemy: {fileID: 1206378332956584, guid: b094edecce4d44c35a44fdbf4f917572,
+    type: 2}
+  impact_mur: {fileID: 1694818688278508, guid: e614f0ec7af284fab977562c1e1a1baf, type: 2}
   bullet: {fileID: 1262895242581320, guid: 40d1fdbaad09d4c37926c9edf5170868, type: 2}
   weapon_ui: {fileID: 114877392862014702}
   hp_ui: {fileID: 114896654121618304}
   speed: 20
   is_falling: 1
   hp: 100
-  reload_ak: {fileID: 8300000, guid: ee033bcfc15084e158645de7af498aa7, type: 3}
-  shoot_ak: {fileID: 8300000, guid: f5808c38bb8d745968b837c7c7477f71, type: 3}
+  reload_ak: {fileID: 8300000, guid: f5808c38bb8d745968b837c7c7477f71, type: 3}
+  shoot_ak: {fileID: 8300000, guid: ee033bcfc15084e158645de7af498aa7, type: 3}
   reload_pistol: {fileID: 8300000, guid: a675e0a106b044ef9a12eb056b890d1d, type: 3}
   shoot_pistol: {fileID: 8300000, guid: 41a2c7144535140d3939129dd5aca82a, type: 3}
   reload_shootgun: {fileID: 8300000, guid: b33cb1da84dd34d1babbbb73602197a7, type: 3}

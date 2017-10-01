@@ -9,11 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/menu.unity
     guid: 3ec10a1e89b774431a13be11e76ecef4
   - enabled: 1
-    path: Assets/Scenes/multi_menu.unity
-    guid: 9d87d74e1b77c4dd1b533d322b556bf0
-  - enabled: 1
-    path: Assets/Scenes/game.unity
-    guid: 610cbe5c036214323869f1b6082c0967
-  - enabled: 1
     path: Assets/Scenes/history.unity
     guid: 1fd98254971d14602814f314e74a9306
+  - enabled: 1
+    path: Assets/Scenes/vrai_map.unity
+    guid: c728ad525ec28cc42af6f3522849021c
+  - enabled: 1
+    path: Assets/Scenes/credit.unity
+    guid: 56a16fc3865c81e4b974f62ced19caec
