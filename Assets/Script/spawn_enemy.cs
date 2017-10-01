@@ -5,7 +5,7 @@ using UnityEngine;
 public class spawn_enemy : MonoBehaviour {
 	private float delayed_time;
 	public float delay = 2;
-	public GameObject entity;
+	public GameObject[] entity;
 
 	void Start()
 	{
@@ -16,7 +16,7 @@ public class spawn_enemy : MonoBehaviour {
 		if (Time.time > delayed_time)
 		{
 			delayed_time = Time.time + delay;
-			Instantiate(entity, transform.position, transform.rotation);
+			Instantiate(entity[(int) Random.Range(-0.5f, entity.Length-0.5f)], transform.position, transform.rotation);
 		}
 	}
 }
