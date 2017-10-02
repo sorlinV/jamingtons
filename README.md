@@ -8,3 +8,9 @@ mouse weel = camera rotation
 f1 f2 f3 = change weapon
 R = reload
 Game created in 48H for the Jamingtons3.0 game jam.
+
+to execute in linux do
+```
+$ chmod o+x BlueOrange_linux.x86
+$ ./BlueOrange_linux.x86
+```
